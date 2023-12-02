@@ -1,7 +1,7 @@
 import GHC.Base  -- <|> (a.k.a mplus)
 import Data.Char (isDigit, digitToInt)
 import Data.List (elemIndex, findIndex, isPrefixOf)
-import System.Environment (getArgs)
+import System.Environment (getArgs, getProgName)
 
 
 ---------- PART ONE ----------
@@ -84,7 +84,8 @@ parseArgs _     = Nothing
 
 printUsage :: IO ()
 printUsage = do
-  putStrLn "Usage: trebuchet <part_number>"
+  progName <- getProgName
+  putStrLn $ "Usage: " ++ progName ++ " <part_number>"
 
 main :: IO ()
 main = do
