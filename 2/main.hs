@@ -119,6 +119,7 @@ part2 = do
   let ps  = map power css
   print $ sum ps
 
+
 ---------- MAIN ----------
 
 data Part = One | Two
