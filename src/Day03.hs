@@ -1,26 +1,12 @@
+module Day03 (solution) where
+
 import Data.Array
 import Data.Char (isDigit)
 import Data.Maybe (mapMaybe)
-import System.Environment (getArgs, getProgName)
+import Lib (Solution, InputFileContent, makeArray)
 
-
----------- ARRAY CREATION  -----------
-
-count :: Eq a => a -> [a] -> Int
-count _ [] = 0
-count t (x : xs)
-  | x == t    = 1 + count t xs
-  | otherwise = count t xs
-
-makeArray :: String -> Array (Int, Int) Char
-makeArray cs = array bnds ijcs
-  where
-    css  = lines cs
-    m    = length css
-    n    = length (head css)
-    bnds = ((0, 0), (m, n))
-    ijcs = range bnds `zip` cs
-
+solution :: Solution
+solution = (part1, part2)
 
 ---------- PART ONE  -----------
 
@@ -64,10 +50,8 @@ partNumbers schematic = ns'
         toSearch = concat [l, r, u, d, ul, ur, dl, dr]
         isSymbol c = not (isDigit c) && (c /= '.')
 
-part1 :: IO ()
-part1 = do
-  schematics <- readFile "input.txt"
-  print (sum (partNumbers schematics))
+part1 :: InputFileContent -> Int
+part1 f = sum (partNumbers f)
 
 
 ---------- PART TWO ----------
@@ -95,7 +79,7 @@ gearRatios schematics = mapMaybe (uncurry (gearRatio acs)) ijs
 
     ls  = lines schematics
     jss = map indexedGears ls
-    ijs = concat $ zipWith (\i js -> map (i,) js) [0..] jss
+    ijs = concat $ zipWith (\i js -> map (\j -> (i, j)) js) [0..] jss
 
 gearRatio :: Array (Int, Int) Char -> Int -> Int -> Maybe Int
 gearRatio acs i j
@@ -127,31 +111,5 @@ numberAt acs i j = go j j
         s = [acs ! (i, j'') | j'' <- [j .. j']]
         (_, (m, _)) = bounds acs
 
-part2 :: IO ()
-part2 = do
-  schematics <- readFile "input.txt"
-  print (sum (gearRatios schematics))
-  
-
----------- MAIN ----------
-
-data Part = One | Two
-
-parseArgs :: [String] -> Maybe Part
-parseArgs ["1"] = Just One
-parseArgs ["2"] = Just Two
-parseArgs _     = Nothing
-
-printUsage :: IO ()
-printUsage = do
-  progName <- getProgName
-  putStrLn ("Usage: " ++ progName ++ " <part_number>")
-
-main :: IO ()
-main = do
-  args <- getArgs
-  let part  = parseArgs args
-  case part of
-    Just One -> part1
-    Just Two -> part2
-    Nothing  -> printUsage
+part2 :: InputFileContent -> Int
+part2 f = sum (gearRatios f)
