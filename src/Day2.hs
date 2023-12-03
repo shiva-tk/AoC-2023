@@ -1,7 +1,8 @@
-import Data.Char (isDigit, digitToInt)
+module Day2 (part1, part2) where
+
 import Data.Maybe (mapMaybe)
 import Text.Read (readMaybe)
-import System.Environment (getArgs, getProgName)
+import Lib (InputFileContent, dropMaybe, splitOn)
 
 
 ---------- DATA TYPES ----------
@@ -25,23 +26,9 @@ gameId (Game n _) = n
 
 ---------- INPUT PARSING ----------
 
-dropMaybe :: Show a => Int -> [a] -> Maybe [a]
-dropMaybe n l
-  | length l > n = Just (drop n l)
-  | otherwise    = Nothing
-
-splitOn :: Eq a => Show a => a -> [a] -> [[a]]
-splitOn _ [] = []
-splitOn d xs = 
-  case t of
-    []       -> [h]
-    (d : t') -> h : splitOn d t'
-  where
-    (h, t) = break (== d) xs
-
 parseColour :: String -> String -> Maybe Colour
 parseColour d s = do
-  n :: Int <- readMaybe d
+  n <- readMaybe d
   case s of
     "red"   -> Just (Red n) 
     "green" -> Just (Green n)
@@ -61,7 +48,7 @@ parseGame :: String -> Maybe Game
 parseGame s = do
   s'            <- dropMaybe (length "Game ") s
   let (d, s'') = break (== ':') s'
-  n :: Int      <- readMaybe d
+  n <- readMaybe d
   s'''          <- dropMaybe (length ": ") s''
   let is        = splitOn ';' s'''
   let is'       = map (splitOn ',') is
@@ -88,12 +75,13 @@ colourPossible (Red n)   = n <= maxRed
 colourPossible (Green n) = n <= maxGreen
 colourPossible (Blue n)  = n <= maxBlue
 
-part1 :: IO () 
-part1 = do
-  d <- readFile "input.txt"
-  let gs  = parseGames d
-  let gs' = filter isPossible gs
-  print (sum (map gameId gs'))
+part1 :: InputFileContent -> Int
+part1 f = n
+  where
+    gs  = parseGames f
+    gs' = filter isPossible gs
+    ns  = map gameId gs'
+    n   = sum ns
 
 
 ---------- PART ONE ----------
@@ -111,34 +99,9 @@ minColoursNeeded (Game n (i : is)) = foldr updateMin (minColoursNeeded (Game n i
 power :: [Colour] -> Int
 power = product . map count
 
-part2 :: IO () 
-part2 = do
-  d <- readFile "input.txt"
-  let gs  = parseGames d
-  let css = map minColoursNeeded gs
-  let ps  = map power css
-  print $ sum ps
-
-
----------- MAIN ----------
-
-data Part = One | Two
-
-parseArgs :: [String] -> Maybe Part
-parseArgs ["1"] = Just One
-parseArgs ["2"] = Just Two
-parseArgs _     = Nothing
-
-printUsage :: IO ()
-printUsage = do
-  progName <- getProgName
-  putStrLn ("Usage: " ++ progName ++ " <part_number>")
-
-main :: IO ()
-main = do
-  args <- getArgs
-  let part  = parseArgs args
-  case part of
-    Just One -> part1
-    Just Two -> part2
-    Nothing  -> printUsage
+part2 :: InputFileContent -> Int 
+part2 f = sum ps
+  where
+    gs = parseGames f
+    cs = map minColoursNeeded gs
+    ps = map power cs
