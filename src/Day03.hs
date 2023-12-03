@@ -1,10 +1,12 @@
-module Day3 (part1, part2) where
+module Day03 (solution) where
 
 import Data.Array
 import Data.Char (isDigit)
 import Data.Maybe (mapMaybe)
-import Lib (InputFileContent, makeArray)
+import Lib (Solution, InputFileContent, makeArray)
 
+solution :: Solution
+solution = (part1, part2)
 
 ---------- PART ONE  -----------
 

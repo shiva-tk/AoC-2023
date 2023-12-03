@@ -1,10 +1,12 @@
-module Day1 (part1, part2) where
+module Day01 (solution) where
 
 import GHC.Base  -- <|> (a.k.a mplus)
 import Data.Char (isDigit, digitToInt)
 import Data.List (elemIndex, findIndex, isPrefixOf)
-import Lib (InputFileContent, digitToIntMaybe)
+import Lib (Solution, InputFileContent, digitToIntMaybe)
 
+solution :: Solution
+solution = (part1, part2)
 
 ---------- PART ONE ----------
 

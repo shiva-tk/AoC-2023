@@ -1,9 +1,11 @@
-module Day2 (part1, part2) where
+module Day02 (solution) where
 
 import Data.Maybe (mapMaybe)
 import Text.Read (readMaybe)
-import Lib (InputFileContent, dropMaybe, splitOn)
+import Lib (Solution, InputFileContent, dropMaybe, splitOn)
 
+solution :: Solution
+solution = (part1, part2)
 
 ---------- DATA TYPES ----------
 

@@ -3,6 +3,8 @@ module Lib where
 import Data.Array
 import Data.Char (isDigit, digitToInt)
 
+type Solution = (InputFileContent -> Int, InputFileContent -> Int)
+
 type InputFileContent = String
 
 digitToIntMaybe :: Char -> Maybe Int
