@@ -2,7 +2,7 @@ module Day02 (solution) where
 
 import Data.Maybe (mapMaybe)
 import Text.Read (readMaybe)
-import Lib (Solution, InputFileContent, dropMaybe, splitOn)
+import Lib (Solution, InputFileContent, dropPrefixMaybe, splitOn)
 
 solution :: Solution
 solution = (part1, part2)
@@ -48,10 +48,10 @@ parseInformation (d : c : ncs) =
 
 parseGame :: String -> Maybe Game
 parseGame s = do
-  s'            <- dropMaybe (length "Game ") s
+  s'            <- dropPrefixMaybe "Game " s
   let (d, s'') = break (== ':') s'
   n <- readMaybe d
-  s'''          <- dropMaybe (length ": ") s''
+  s'''          <- dropPrefixMaybe ": " s''
   let is        = splitOn ';' s'''
   let is'       = map (splitOn ',') is
   let is''      = map (concatMap words) is'

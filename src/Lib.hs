@@ -7,15 +7,24 @@ type Solution = (InputFileContent -> Int, InputFileContent -> Int)
 
 type InputFileContent = String
 
+-- Handy functions for input file parsing
+--
 digitToIntMaybe :: Char -> Maybe Int
 digitToIntMaybe c
   | isDigit c = Just (digitToInt c)
   | otherwise = Nothing
 
-dropMaybe :: Show a => Int -> [a] -> Maybe [a]
+dropMaybe :: Int -> [a] -> Maybe [a]
 dropMaybe n l
   | length l > n = Just (drop n l)
   | otherwise    = Nothing
+
+dropPrefixMaybe :: Eq a => [a] -> [a] -> Maybe [a]
+dropPrefixMaybe [] ys      = Just ys
+dropPrefixMaybe (_ : _) [] = Nothing
+dropPrefixMaybe (x : xs) (y : ys)
+  | x == y    = dropPrefixMaybe xs ys
+  | otherwise = Nothing
 
 splitOn :: Eq a => Show a => a -> [a] -> [[a]]
 splitOn _ [] = []
