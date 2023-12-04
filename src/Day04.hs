@@ -65,7 +65,7 @@ part1 s
   where p = parse scratchCards "" s
 
 
----------- PART ONE ----------
+---------- PART TWO ----------
 
 scratchCardsWon :: [ScratchCard] -> Int
 scratchCardsWon scs = go scs (repeat 1)
