@@ -6,11 +6,13 @@ import Lib   (Solution)
 import qualified Day01
 import qualified Day02
 import qualified Day03
+import qualified Day04
 
 daySolutions :: [Solution]
 daySolutions = [ Day01.solution
                , Day02.solution
                , Day03.solution
+               , Day04.solution
                ]
 
 printUsage :: IO ()
