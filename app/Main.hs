@@ -30,14 +30,16 @@ printUsage = do
 main :: IO ()
 main = do
   args <- getArgs
+
   case args of
     [dayStr, partStr, inputPath] -> do
-      let day = read dayStr
-          part = if partStr == "1" then fst else snd
-      f <- readFile inputPath
+      let day  = read dayStr
+      let part = if partStr == "1" then fst else snd
       if day < 1 || day > length daySolutions
         then printUsage
         else do
           let solution = daySolutions !! (day - 1)
-          print $ part solution f
+          input        <- readFile inputPath
+          print $ part solution input
+
     _ -> printUsage
