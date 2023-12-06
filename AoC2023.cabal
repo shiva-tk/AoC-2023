@@ -27,6 +27,7 @@ library
       Day03, 
       Day04,
       Day05,
+      Day06,
       Lib
 
     -- Modules included in this library but not exported.
