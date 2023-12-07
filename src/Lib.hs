@@ -48,6 +48,12 @@ count t (x : xs)
   | x == t    = 1 + count t xs
   | otherwise = count t xs
 
+countBy :: (a -> Bool) -> [a] -> Int
+countBy _ [] = 0
+countBy p (x : xs)
+  | p x       = 1 + countBy p xs
+  | otherwise = countBy p xs
+
 for :: Int -> (a -> a) -> [a] -> [a]
 for 0 _ xs = xs
 for n f (x : xs) = f x : for (n - 1) f xs
@@ -62,3 +68,9 @@ makeArray cs = array bnds ijcs
     n    = length (head css)
     bnds = ((0, 0), (m, n))
     ijcs = range bnds `zip` cs
+
+-- Maybe utilities
+
+orElse :: Maybe a -> a -> a
+orElse Nothing  x = x
+orElse (Just x) _ = x
