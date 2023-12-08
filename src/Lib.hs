@@ -20,6 +20,11 @@ dropMaybe n l
   | length l > n = Just (drop n l)
   | otherwise    = Nothing
 
+takeMaybe :: Show a => Int -> [a] -> Maybe [a]
+takeMaybe n l
+  | length l > n = Just (take n l)
+  | otherwise    = Nothing
+
 dropPrefixMaybe :: Eq a => [a] -> [a] -> Maybe [a]
 dropPrefixMaybe [] ys      = Just ys
 dropPrefixMaybe (_ : _) [] = Nothing

@@ -29,6 +29,7 @@ library
       Day05,
       Day06,
       Day07,
+      Day08,
       Lib
 
     -- Modules included in this library but not exported.
@@ -37,9 +38,11 @@ library
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:    
-      base ^>=4.16.4.0, 
+      base, 
       array,
+      deque,
       containers,
+      unordered-containers,
       parsec
 
     hs-source-dirs:   src
@@ -54,7 +57,7 @@ executable AoC2023
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:
-        base ^>=4.16.4.0,
+        base,
         AoC2023
 
     hs-source-dirs:   app
